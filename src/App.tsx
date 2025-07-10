@@ -201,7 +201,7 @@ function App() {
         onLoad={setIsLoading}
       />
 
-      {isLoading && !fileSelected && (
+      {isLoading && (
         <div className="h-full w-full flex justify-center items-center">
           <Loader />
         </div>
