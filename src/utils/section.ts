@@ -11,7 +11,7 @@ function keyInclude(key: string, value: string) {
 }
 
 const formatNumber = (value: number): string => {
-    return (value / 1000).toLocaleString('es-ES', {
+    return value.toLocaleString('es-ES', {
         minimumFractionDigits: 3,
         maximumFractionDigits: 3,
     });
@@ -24,7 +24,7 @@ export const getFileData = async (buffer: ArrayBuffer) => {
 
     const workbook = read(arrayBuffer, { type: 'array' });
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows: any[][] = utils.sheet_to_json(sheet, { header: 1 });
+    const rows: any[][] = utils.sheet_to_json(sheet, { header: 1, raw: false });
 
     const sections: Record<SectionName, any[]> = {
         sesion: [],
@@ -77,63 +77,53 @@ export const getFileData = async (buffer: ArrayBuffer) => {
                         key = 'Descripción'
                     }
 
-                    if (typeof value === 'number') {
-                        if (key === 'ID' || key.includes('ID de sesi') || key === 'ID de atleta' || key === 'ID de salto') {
-                            if (key === 'ID') {
-                                key = 'Id';
-                            }
-
-                            if (key.includes('ID de sesi')) {
-                                key = 'Id_de_sesion';
-                            }
-
-                            if (key === 'ID de atleta') {
-                                key = 'Id_de_atleta';
-                            } else if (key === 'ID de salto') {
-                                key = 'Id_de_salto';
-                            }
-                        }
-
-                        if (key === 'AÑO Nac') {
-                            key = 'Fecha_Nacimiento';
-                            value = String(value)
-                        }
-
-                        if (keyInclude(key, 'altura') ||
-                            keyInclude(key, 'potencia') ||
-                            keyInclude(key, 'velocidad inicial') ||
-                            keyInclude(key, 'peso kg') ||
-                            keyInclude(key, 'rigidez') ||
-                            keyInclude(key, 'rsi') ||
-                            keyInclude(key, 'caída')
-                        ) {
-                            if (keyInclude(key, 'velocidad inicial')) {
-                                key = 'Velocidad_inicial';
-                            }
-
-                            if (keyInclude(key, 'peso kg')) {
-                                key = 'Peso_KG'
-                            }
-
-                            value = formatNumber(value)
-                        }
-                    }
-
-
-
-                    if (typeof value === 'string') {
+                    if (key === 'ID' || key.includes('ID de sesi') || key === 'ID de atleta' || key === 'ID de salto') {
                         if (key === 'ID') {
                             key = 'Id';
                         }
 
-                        if (key === 'Nombre de atleta') {
-                            key = 'Nombre_de_atleta'
+                        if (key.includes('ID de sesi')) {
+                            key = 'Id_de_sesion';
                         }
 
-                        if (key === 'Fecha y hora') {
-                            key = 'Fecha_y_hora'
-                            value = parseDateAndHour(value);
+                        if (key === 'ID de atleta') {
+                            key = 'Id_de_atleta';
+                        } else if (key === 'ID de salto') {
+                            key = 'Id_de_salto';
                         }
+                    }
+
+                    if (key === 'AÑO Nac') {
+                        key = 'Fecha_Nacimiento';
+                        value = String(value)
+                    }
+
+                    if (keyInclude(key, 'altura') ||
+                        keyInclude(key, 'potencia') ||
+                        keyInclude(key, 'velocidad inicial') ||
+                        keyInclude(key, 'peso kg') ||
+                        keyInclude(key, 'rigidez') ||
+                        keyInclude(key, 'rsi') ||
+                        keyInclude(key, 'caída')
+                    ) {
+                        if (keyInclude(key, 'velocidad inicial')) {
+                            key = 'Velocidad_inicial';
+                        }
+
+                        if (keyInclude(key, 'peso kg')) {
+                            key = 'Peso_KG'
+                        }
+
+                        value = formatNumber(value)
+                    }
+
+                    if (key === 'Nombre de atleta') {
+                        key = 'Nombre_de_atleta'
+                    }
+
+                    if (key === 'Fecha y hora') {
+                        key = 'Fecha_y_hora'
+                        value = parseDateAndHour(value);
                     }
 
                     obj[key] = value;
