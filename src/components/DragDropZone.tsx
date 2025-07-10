@@ -78,7 +78,7 @@ export function DragDropZone({
     }
 
     return (
-        <div className={cn("w-full max-w-2xl mx-auto", className)}>
+        <div className={cn("w-full mx-auto", className)}>
             {/* Zona de Drop */}
             <Card
                 className={cn(
