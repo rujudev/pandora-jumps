@@ -2,6 +2,7 @@ body {
     height: 100dvh;
 }
 
-main {
+main,
+#root {
     height: 100%;
 }
