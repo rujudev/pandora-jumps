@@ -23,7 +23,6 @@ export function DragDropZone({
     className,
 }: DragDropZoneProps) {
     const [isDragOver, setIsDragOver] = useState(false)
-    const [file, setFile] = useState<File>()
     const [progress, setProgress] = useState<number>(0);
     const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -31,7 +30,6 @@ export function DragDropZone({
         onLoad(true)
 
         await simulateUpload()
-        setFile(file[0])
         onFileSelected?.(file[0])
 
         onLoad(false)
