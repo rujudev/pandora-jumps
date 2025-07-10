@@ -84,7 +84,7 @@ export function DragDropZone({
             {/* Zona de Drop */}
             <Card
                 className={cn(
-                    "border-2 border-dashed transition-all duration-200 cursor-pointer py-0",
+                    "flex items-center justify-center border-2 border-dashed transition-all duration-200 cursor-pointer py-0 h-full",
                     isDragOver ? "border-primary bg-primary/5 scale-105" : "border-muted-foreground/25 hover:border-primary/50",
                 )}
                 onDragOver={handleDragOver}
@@ -92,7 +92,7 @@ export function DragDropZone({
                 onDrop={handleDrop}
                 onClick={() => fileInputRef.current?.click()}
             >
-                <CardContent className="flex flex-col items-center justify-center py-12 px-6 text-center">
+                <CardContent className="flex flex-col items-center justify-center py-12 px-6 text-center w-full">
                     <div
                         className={cn(
                             "rounded-full p-4 mb-4 transition-colors",
@@ -117,11 +117,6 @@ export function DragDropZone({
                     <p className="text-xs text-muted-foreground mt-2">Formatos soportados: {acceptedFileTypes.join(", ")}</p>
 
                     {isLoading && <Progress value={progress} className="my-4" />}
-                    {file && progress === 0 && !isLoading && (
-                        <div className="flex items-center justify-center py-4">
-                            <h4 className="font-semibold">Archivo seleccionado: {file.name}</h4>
-                        </div>
-                    )}
                 </CardContent>
             </Card>
 
