@@ -325,22 +325,24 @@ function App() {
 
                     <Command>
                       <CommandGroup>
-                        {sections?.atletas.map((athlete, i) => (
-                          <CommandItem
-                            key={`${athlete.Id}-${i}`}
-                            onSelect={() => handleSelectAthlete(athlete.Id)}
-                            className="[&_svg:not([class*='text-'])]:text-current"
-                          >
-                            <Checkbox
-                              id={athlete.Id}
-                              checked={selectedAthletes.includes(athlete.Id)}
-                            />
-                            <Label htmlFor={athlete.Id} className="text-sm">
-                              {athlete.Nombre}
-                            </Label>
-                          </CommandItem>
+                        {sections?.atletas
+                          .filter(athlete => sections?.saltos.some(salto => salto.Id_de_atleta === athlete.Id))
+                          .map((athlete, i) => (
+                            <CommandItem
+                              key={`${athlete.Id}-${i}`}
+                              onSelect={() => handleSelectAthlete(athlete.Id)}
+                              className="[&_svg:not([class*='text-'])]:text-current"
+                            >
+                              <Checkbox
+                                id={athlete.Id}
+                                checked={selectedAthletes.includes(athlete.Id)}
+                              />
+                              <Label htmlFor={athlete.Id} className="text-sm">
+                                {athlete.Nombre}
+                              </Label>
+                            </CommandItem>
 
-                        ))}
+                          ))}
                       </CommandGroup>
                     </Command>
 
