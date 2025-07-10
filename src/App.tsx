@@ -192,7 +192,7 @@ function App() {
   return (
     <main className="flex flex-col gap-5 p-5">
       <div className='flex justify-center w-full'>
-        <img src="./src/assets/logo.png" className='aspect-[16/9] object-cover h-40' />
+        <img src="logo.png" className='aspect-[16/9] object-cover h-40' />
       </div>
       <DragDropZone
         acceptedFileTypes={[".csv", ".xls", ".xlsx"]}
