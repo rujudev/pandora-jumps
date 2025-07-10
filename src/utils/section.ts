@@ -1,10 +1,4 @@
-import { format } from 'date-fns';
 import { read, utils } from 'xlsx';
-
-function parseExcelDate(excelSerialDate: number): string {
-    const jsDate = new Date(Math.round((excelSerialDate - 25569) * 86400 * 1000));
-    return format(jsDate, 'd-M-yyyy')
-}
 
 function parseDateAndHour(dateString: string) {
     const [date, hour] = dateString.split('_')
@@ -14,10 +8,6 @@ function parseDateAndHour(dateString: string) {
 
 function keyInclude(key: string, value: string) {
     return key.trim().toLowerCase().includes(value)
-}
-
-function quitarTildes(texto: string): string {
-    return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
 const formatNumber = (value: number): string => {
