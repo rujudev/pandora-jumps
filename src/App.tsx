@@ -194,15 +194,17 @@ function App() {
       <div className='flex justify-center w-full'>
         <img src="logo.png" className='aspect-[16/9] object-cover h-40' />
       </div>
-      <div className={`grid-cols-${!isLoading && fileSelected ? '2' : '1'} grid gap-5`}>
+      <div className={`grid-cols-${!isLoading && fileSelected ? '2' : '1'}${!isLoading && fileSelected ? '' : ' max-w-2xl mx-auto w-full'} grid gap-5`}>
         <DragDropZone
+          {...(!isLoading && fileSelected && { className: 'col-start-1' })}
+          className={`${!isLoading && fileSelected ? '2' : '1'}`}
           acceptedFileTypes={[".csv", ".xls", ".xlsx"]}
           onFileSelected={setFileSelected}
           isLoading={isLoading}
           onLoad={setIsLoading}
         />
         {!isLoading && fileSelected && (
-          <div className='flex flex-col gap-5'>
+          <div className='flex flex-col gap-5 col-start-2'>
             <SessionInfo sections={sections} />
             <Card>
               <CardHeader>
@@ -223,7 +225,7 @@ function App() {
 
       {!isLoading && fileSelected && (
         <div className="flex w-full flex-col gap-6">
-          <Tabs defaultValue="account">
+          <Tabs defaultValue="athletes">
             <TabsList className='w-full'>
               <TabsTrigger className='cursor-pointer' value="athletes">
                 <Users2Icon /> Atletas
