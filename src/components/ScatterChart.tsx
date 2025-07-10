@@ -19,6 +19,10 @@ interface ScatterTrendlineChartProps {
     metric: keyof Jump
 }
 
+type ProcessData = Jump & {
+    trendline: number
+}
+
 // Función para normalizar valores (convertir comas a puntos y a número)
 function normalizeValue(value: any): number {
     if (typeof value === "number") return value
@@ -81,15 +85,13 @@ const CustomTooltip = ({ active, payload, label, ...restOfProps }: any) => {
         if (!scatterPayload) return null
 
         const data = scatterPayload.payload
-        const yKey = scatterPayload.dataKey.replace("_normalized", "")
+        const yKey: keyof ProcessData = scatterPayload.dataKey.replace("_normalized", "")
 
-        const athleteKeyData = restOfProps.processedData.filter(
-            pData => pData.Id_de_atleta === data.Id_de_atleta
-        )
-            .map(d => ({
+        const proccessData: ProcessData[] = restOfProps.processedData
+            .filter((pData: Jump) => pData.Id_de_atleta === data.Id_de_atleta)
+            .map((d: ProcessData) => ({
                 ...d,
-                idSalto: d.Id_de_salto,
-                [yKey]: normalizeValue(d[yKey]).toFixed(3),
+                [yKey]: normalizeValue(Number(d[yKey])).toFixed(3),
                 trendline: normalizeValue(d.trendline).toFixed(3)
             }))
 
@@ -106,15 +108,15 @@ const CustomTooltip = ({ active, payload, label, ...restOfProps }: any) => {
                 </div>
 
                 <div className="space-y-2 [&>div]:not-last:border-b-1 [&>div]:not-last:border-gray-300 z-1">
-                    {athleteKeyData.map(athleteData => (
+                    {proccessData.map(athleteData => (
                         <div className="flex flex-col gap-2 pb-2">
                             <div className="flex justify-between gap-1">
                                 <span className="font-bold">ID Salto:</span>
-                                <span className="font-medium">{athleteData.idSalto}</span>
+                                <span className="font-medium">{athleteData.Id_de_salto}</span>
                             </div>
                             <div className="flex justify-between gap-1">
                                 <span className="font-bold text-sky">{yKey}:</span>
-                                <span className="font-medium">{parseFloat(athleteData[yKey]).toFixed(2)}</span>
+                                <span className="font-medium">{parseFloat(String(athleteData[yKey])).toFixed(2)}</span>
                             </div>
                         </div>
                     ))}

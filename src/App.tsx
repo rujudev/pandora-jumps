@@ -86,7 +86,7 @@ function App() {
   const capitalizeStr = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
   const selectAllAthletes = () => {
-    const athleteIds = sections && sections?.atletas.map((athlete, i) => {
+    const athleteIds = sections && sections?.atletas.map(athlete => {
 
       if (athlete.Id === '') {
         const foundAthlete = sections?.saltos.find(aS => aS.Nombre_de_atleta === athlete.Nombre)

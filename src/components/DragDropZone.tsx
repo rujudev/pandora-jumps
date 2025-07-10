@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
-import { Archive, File, FileText, ImageIcon, Music, Upload, Video } from "lucide-react"
+import { Upload } from "lucide-react"
 import { useCallback, useRef, useState } from "react"
 
 interface DragDropZoneProps {
@@ -13,15 +13,6 @@ interface DragDropZoneProps {
     isLoading?: boolean,
     onLoad?: (isLoading: boolean) => void,
     className?: string
-}
-
-const getFileIcon = (fileType: string) => {
-    if (fileType.startsWith("image/")) return ImageIcon
-    if (fileType.startsWith("video/")) return Video
-    if (fileType.startsWith("audio/")) return Music
-    if (fileType.includes("pdf") || fileType.includes("document")) return FileText
-    if (fileType.includes("zip") || fileType.includes("rar")) return Archive
-    return File
 }
 
 export function DragDropZone({
