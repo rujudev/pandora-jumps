@@ -28,7 +28,7 @@ function normalizeValue(value: any): number {
     if (typeof value === "number") return value
     if (typeof value === "string") {
         const normalized = value.replace(",", ".")
-        const parsed = Number.parseFloat(normalized)
+        const parsed = parseFloat(normalized)
         return isNaN(parsed) ? 0 : parsed
     }
     return 0
@@ -45,10 +45,10 @@ function calculateTrendline(data: any[], yKey: string) {
     if (validData.length < 2) return { processedData: data, trendlineData: [] }
 
     const n = validData.length
-    const sumX = validData.reduce((sum, item) => sum + item.Id_de_atleta, 0)
+    const sumX = validData.reduce((sum, item) => sum + Number(item.Id_de_atleta), 0)
     const sumY = validData.reduce((sum, item) => sum + normalizeValue(item[yKey]), 0)
-    const sumXY = validData.reduce((sum, item) => sum + item.Id_de_atleta * normalizeValue(item[yKey]), 0)
-    const sumXX = validData.reduce((sum, item) => sum + Math.pow(item.Id_de_atleta, 2), 0)
+    const sumXY = validData.reduce((sum, item) => sum + Number(item.Id_de_atleta) * normalizeValue(item[yKey]), 0)
+    const sumXX = validData.reduce((sum, item) => sum + Math.pow(Number(item.Id_de_atleta), 2), 0)
 
     const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX)
     const intercept = (sumY - slope * sumX) / n
@@ -61,13 +61,16 @@ function calculateTrendline(data: any[], yKey: string) {
         [yKey + "_normalized"]: normalizeValue(item[yKey]),
         slope,
         intercept,
-        trendline: slope * item.Id_de_atleta + intercept
+        trendline: slope * Number(item.Id_de_atleta) + intercept
     })).sort((a, b) => a.Id_de_atleta - b.Id_de_atleta)
 
-    const trendlineData = processedData.map((item) => ({
-        Id_de_atleta: item.Id_de_atleta,
-        trendline: slope * item.Id_de_atleta + intercept,
-    }))
+    const trendlineData = processedData.map((item) => {
+        const idAtleta = Number(item.Id_de_atleta)
+        return {
+            Id_de_atleta: idAtleta,
+            trendline: slope * idAtleta + intercept,
+        }
+    })
 
     const uniqueIds = processedData.map((p) => p.Id_de_atleta)
     const minTrendline = slope * Math.min(...uniqueIds) + intercept
@@ -85,7 +88,8 @@ const CustomTooltip = ({ active, payload, label, ...restOfProps }: any) => {
         if (!scatterPayload) return null
 
         const data = scatterPayload.payload
-        const yKey: keyof ProcessData = scatterPayload.dataKey.replace("_normalized", "")
+        // const yKey: keyof ProcessData = scatterPayload.dataKey.replace("_normalized", "")
+        const yKey: keyof ProcessData = scatterPayload.dataKey
 
         const proccessData: ProcessData[] = restOfProps.processedData
             .filter((pData: Jump) => pData.Id_de_atleta === data.Id_de_atleta)
@@ -108,18 +112,20 @@ const CustomTooltip = ({ active, payload, label, ...restOfProps }: any) => {
                 </div>
 
                 <div className="space-y-2 [&>div]:not-last:border-b-1 [&>div]:not-last:border-gray-300 z-1">
-                    {proccessData.map(athleteData => (
-                        <div className="flex flex-col gap-2 pb-2">
-                            <div className="flex justify-between gap-1">
-                                <span className="font-bold">ID Salto:</span>
-                                <span className="font-medium">{athleteData.Id_de_salto}</span>
+                    {proccessData.map(athleteData => {
+                        return (
+                            <div className="flex flex-col gap-2 pb-2">
+                                <div className="flex justify-between gap-1">
+                                    <span className="font-bold">ID Salto:</span>
+                                    <span className="font-medium">{athleteData.Id_de_salto}</span>
+                                </div>
+                                <div className="flex justify-between gap-1">
+                                    <span className="font-bold text-sky">{yKey.replace("_normalized", "")}:</span>
+                                    <span className="font-medium">{parseFloat(String(athleteData[yKey])).toFixed(2)}</span>
+                                </div>
                             </div>
-                            <div className="flex justify-between gap-1">
-                                <span className="font-bold text-sky">{yKey}:</span>
-                                <span className="font-medium">{parseFloat(String(athleteData[yKey])).toFixed(2)}</span>
-                            </div>
-                        </div>
-                    ))}
+                        )
+                    })}
                 </div>
             </div>
         )
