@@ -103,7 +103,7 @@ function DataTable<TData, TValue>({
                 </div>
                 {Object.values(data).every(d => Object.keys(d).includes('Tipo')) && (
                     <div className="">
-                        <Select>
+                        <Select onValueChange={(value) => table.setColumnFilters([{ id: 'Tipo', value }])}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Filtrar por salto" />
                             </SelectTrigger>
