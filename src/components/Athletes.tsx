@@ -1,7 +1,8 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import DataTable from "@/components/ui/data-table";
 import type { ColumnDef } from "@tanstack/react-table";
-import { DumbbellIcon } from "lucide-react";
-import DataTable from "./ui/data-table";
+import { ArrowUpDown, DumbbellIcon } from "lucide-react";
 
 type Athlete = {
     Id: number,
@@ -19,7 +20,17 @@ const Athletes = ({ atletas = [] }: { atletas: Athlete[] }) => {
     const columns: ColumnDef<Athlete>[] = [
         {
             accessorKey: 'Id',
-            header: () => <div className="text-left">Id</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Id
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
             cell: ({ row }) => (
                 <span>
                     {row.getValue('Id') ?? '-'}
@@ -28,7 +39,17 @@ const Athletes = ({ atletas = [] }: { atletas: Athlete[] }) => {
         },
         {
             accessorKey: 'Nombre',
-            header: () => <div className="text-left">Nombre</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Nombre
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
             cell: ({ row }) => (
                 <span>
                     {row.getValue('Nombre') ?? '-'}
@@ -37,7 +58,17 @@ const Athletes = ({ atletas = [] }: { atletas: Athlete[] }) => {
         },
         {
             accessorKey: 'Sexo',
-            header: () => <div className="text-left">Sexo</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Sexo
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
             cell: ({ row }) => (
                 <Badge variant="outline">
                     {row.getValue('Sexo') ?? '-'}
@@ -46,7 +77,17 @@ const Athletes = ({ atletas = [] }: { atletas: Athlete[] }) => {
         },
         {
             accessorKey: 'Fecha_Nacimiento',
-            header: () => <div className="text-left">Fecha nacimiento</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Fecha nacimiento
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
             cell: ({ row }) => (
                 <span>
                     {row.getValue('Fecha_Nacimiento') ?? '-'}
@@ -55,7 +96,17 @@ const Athletes = ({ atletas = [] }: { atletas: Athlete[] }) => {
         },
         {
             accessorKey: 'Altura',
-            header: () => <div className="text-left">Altura</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Altura
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
             cell: ({ row }) => (
                 <span>
                     {row.getValue('Altura') ?? '-'}
@@ -64,7 +115,17 @@ const Athletes = ({ atletas = [] }: { atletas: Athlete[] }) => {
         },
         {
             accessorKey: 'Peso',
-            header: () => <div className="text-left">Peso</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Peso (KG)
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
             cell: ({ row }) => (
                 <span>
                     {row.getValue('Peso') ?? '-'}
@@ -73,7 +134,17 @@ const Athletes = ({ atletas = [] }: { atletas: Athlete[] }) => {
         },
         {
             accessorKey: 'Deporte',
-            header: () => <div className="text-left">Deporte</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Deporte
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
             cell: ({ row }) => (
                 <span>
                     {row.getValue('Deporte') ?? '-'}
@@ -82,7 +153,17 @@ const Athletes = ({ atletas = [] }: { atletas: Athlete[] }) => {
         },
         {
             accessorKey: 'Especialidad',
-            header: () => <div className="text-left">Especialidad</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Especialidad
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
             cell: ({ row }) => (
                 <span>
                     {row.getValue('Especialidad') ?? '-'}
@@ -91,7 +172,17 @@ const Athletes = ({ atletas = [] }: { atletas: Athlete[] }) => {
         },
         {
             accessorKey: 'Nivel',
-            header: () => <div className="text-left">Nivel</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Nivel
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
             cell: ({ row }) => (
                 <Badge variant="outline">
                     {row.getValue('Nivel') ?? '-'}

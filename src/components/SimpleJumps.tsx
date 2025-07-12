@@ -1,6 +1,7 @@
+import { Button } from "@/components/ui/button";
+import DataTable from "@/components/ui/data-table";
 import type { ColumnDef } from "@tanstack/react-table";
-import { AwardIcon } from "lucide-react";
-import DataTable from "./ui/data-table";
+import { ArrowUpDown, AwardIcon } from "lucide-react";
 
 export type Jump = {
     Id_de_atleta: number,
@@ -25,67 +26,244 @@ const SimpleJumps = ({ saltos = [] }: { saltos: Jump[] }) => {
     const columns: ColumnDef<Jump>[] = [
         {
             accessorKey: 'Id_de_atleta',
-            header: () => <div className="text-left">ID Atleta</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        ID Atleta
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'Nombre_de_atleta',
-            header: () => <div className="text-left">Nombre Atleta</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Nombre Atleta
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'Id_de_salto',
-            header: () => <div className="text-left">ID Salto</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        ID Salto
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'Tipo',
-            header: () => <div className="text-left">Tipo</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Tipo
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'TC',
-            header: () => <div className="text-left">TC</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        TC
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'TV',
-            header: () => <div className="text-left">TV</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        TV
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'Caída',
-            header: () => <div className="text-left">Caída</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Caída
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'Peso_KG',
-            header: () => <div className="text-left">Peso (KG)</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Peso (KG)
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'Altura',
-            header: () => <div className="text-left">Altura</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Altura
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'Potencia',
-            header: () => <div className="text-left">Potencia</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Potencia
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'Rigidez',
-            header: () => <div className="text-left">Rigidez</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Rigidez
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'Velocidad_inicial',
-            header: () => <div className="text-left">Velocidad Inicial</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Velocidad Inicial
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'RSI',
-            header: () => <div className="text-left">RSI</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        RSI
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'Fecha_y_hora',
-            header: () => <div className="text-left">Fecha y Hora</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Fecha y Hora
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'Descripción',
-            header: () => <div className="text-left">Descripción</div>,
+            header: ({ column }) => {
+                console.log(column);
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Descripción
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
         {
             accessorKey: 'Simulado',
-            header: () => <div className="text-left">Simulado</div>,
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Simulado
+                        <ArrowUpDown />
+                    </Button>
+                )
+            },
+            enableSorting: true
         },
     ];
 
@@ -97,7 +275,11 @@ const SimpleJumps = ({ saltos = [] }: { saltos: Jump[] }) => {
                     <h2 className="font-bold text-2xl">Registro de saltos</h2>
                 </div>
             </header>
-            <DataTable data={saltos} columns={columns} inputPlaceholder="Buscar por ID atleta, nombre, ID salto..." />
+            <DataTable
+                data={saltos}
+                columns={columns}
+                inputPlaceholder="Buscar por ID atleta, nombre, ID salto..."
+            />
         </section>
     )
 
