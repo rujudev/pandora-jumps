@@ -13,7 +13,7 @@ export const axisIds = ['y', 'y1', 'y2'];
 const CustomLabel = (props: any) => {
     const { value, viewBox, position } = props;
     const centerY = viewBox.y + viewBox.height / 2;
-    const offset = 36;
+    const offset = 24;
     const x = position === "insideLeft"
         ? viewBox.x + offset - 10
         : viewBox.x + viewBox.width + offset * -1 + 15;
@@ -33,20 +33,51 @@ const CustomLabel = (props: any) => {
     );
 };
 
+const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+        return (
+            <div className="bg-white p-2 rounded shadow">
+                <p className="font-bold">{payload[0].payload.atleta}</p>
+                {payload.map((item: any) => (
+                    <p key={item.name} style={{ color: item.color }}>
+                        {item.name}: {parseFloat(item.value).toFixed(2)}
+                    </p>
+                ))}
+            </div>
+        );
+    }
+
+    return null;
+}
+
 const BarLineChart = ({ data = [], metrics = [] }: { data: Jump[], metrics: (keyof Jump)[] }) => {
     const grouped: Record<string, any> = {};
 
     data.forEach(d => {
         if (!grouped[d.Nombre_de_atleta]) grouped[d.Nombre_de_atleta] = { atleta: d.Nombre_de_atleta };
+
         metrics.forEach(metric => {
             // Si la métrica es string, conviértela a número
             const value = typeof d[metric] === "string"
                 ? parseFloat(String(d[metric]).replace(",", "."))
                 : d[metric];
-            // Aquí puedes decidir si guardar el último, el máximo, el promedio, etc.
-            grouped[d.Nombre_de_atleta][metric] = value;
+
+            if (!Array.isArray(grouped[d.Nombre_de_atleta][metric])) {
+                grouped[d.Nombre_de_atleta][metric] = [];
+            }
+
+            grouped[d.Nombre_de_atleta][metric].push(value);
         });
     });
+
+    for (const key in grouped) {
+        for (const metric of metrics) {
+            const values = grouped[key][metric];
+            if (Array.isArray(values)) {
+                grouped[key][metric] = Math.max(...values);
+            }
+        }
+    }
 
     const rechartsData = Object.values(grouped);
     const chartConfig: Partial<Record<keyof Jump, any>> = {} satisfies ChartConfig
@@ -88,7 +119,7 @@ const BarLineChart = ({ data = [], metrics = [] }: { data: Jump[], metrics: (key
                     );
                 })}
                 <Legend verticalAlign="top" wrapperStyle={{ fontSize: '14px' }} height={36} />
-                <Tooltip />
+                <Tooltip content={<CustomTooltip />} />
                 {/* 2 barras y 1 línea, pero puedes hacerlo dinámico */}
                 {metrics.map((metric, i) => {
                     const color = chartColors[axisIds[i] ?? 'y'];
