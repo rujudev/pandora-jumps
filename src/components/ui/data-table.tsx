@@ -1,13 +1,15 @@
 import type { ColumnDef } from '@tanstack/react-table'
 
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 import {
+    type ColumnFiltersState,
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
     getPaginationRowModel,
+    getSortedRowModel,
     useReactTable
 } from "@tanstack/react-table"
 
@@ -47,6 +49,7 @@ function DataTable<TData, TValue>({
         pageIndex: 0,
         pageSize: 10,
     })
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
     const table = useReactTable({
         data,
@@ -54,9 +57,12 @@ function DataTable<TData, TValue>({
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        onColumnFiltersChange: setColumnFilters,
         onPaginationChange: setPaginationState,
         state: {
             pagination: paginationState,
+            columnFilters
         }
     })
 
@@ -81,18 +87,40 @@ function DataTable<TData, TValue>({
         return pages.slice(0, pagesToShowLeftRight + 1);
     }, [pageCount, pageIndex])
 
+
     return (
         <div>
-            <div className="flex items-center py-4 relative">
-                <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                    placeholder={inputPlaceholder ? inputPlaceholder : 'Buscar por id, nombre, sexo, deporte...'}
-                    onChange={(event) =>
-                        table.setGlobalFilter(event.target.value)
-                    }
-                    className="pl-10 max-w-sm"
-                />
+            <div className="flex items-center justify-between w-full mb-4 py-4">
+                <div className="flex items-center relative">
+                    <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                    <Input
+                        placeholder={inputPlaceholder ? inputPlaceholder : 'Buscar atleta...'}
+                        onChange={(event) =>
+                            table.setGlobalFilter(event.target.value)
+                        }
+                        className="pl-10 w-full"
+                    />
+                </div>
+                {Object.values(data).every(d => Object.keys(d).includes('Tipo')) && (
+                    <div className="">
+                        <Select>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Filtrar por salto" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    {Array.from(new Set(data.map(d => d.Tipo))).map((tipo, index) => (
+                                        <SelectItem key={index} value={tipo}>
+                                            {tipo}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                )}
             </div>
+
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
