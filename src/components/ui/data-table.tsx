@@ -90,7 +90,7 @@ function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className="flex items-center justify-between w-full mb-4 py-4">
+            <header className="flex items-center justify-between w-full py-4">
                 <div className="flex items-center relative">
                     <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
                     <Input
@@ -119,7 +119,7 @@ function DataTable<TData, TValue>({
                         </Select>
                     </div>
                 )}
-            </div>
+            </header>
 
             <div className="rounded-md border">
                 <Table>
@@ -164,8 +164,8 @@ function DataTable<TData, TValue>({
                         )}
                     </TableBody>
                 </Table>
-                <div className="flex items-center justify-between mt-4 w-full">
-                    <div className="flex items-center gap-4 w-full py-2 has-[>svg]:px-3 px-2.5 sm:pl-2.5">
+                <div className="flex max-md:flex-wrap items-center justify-between mt-4 w-full">
+                    <div className="flex max-md:justify-center items-center gap-4 w-full py-2 has-[>svg]:px-3 px-2.5 sm:pl-2.5">
                         <div className="flex items-center gap-2">
                             <span className="text-sm text-muted-foreground">Mostrar:</span>
                             <Select
@@ -189,7 +189,7 @@ function DataTable<TData, TValue>({
                             resultados
                         </p>
                     </div>
-                    <Pagination className="justify-end">
+                    <Pagination className="max-md:p-4 max-md:justify-center justify-end">
                         <PaginationContent>
                             <PaginationItem>
                                 <PaginationPrevious
