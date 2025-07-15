@@ -40,7 +40,7 @@ interface DataTableProps<TData, TValue> {
     inputPlaceholder?: string
 }
 
-function DataTable<TData, TValue>({
+function DataTable<TData extends object, TValue>({
     data,
     columns,
     inputPlaceholder
@@ -101,7 +101,7 @@ function DataTable<TData, TValue>({
                         className="pl-10 w-full"
                     />
                 </div>
-                {Object.values(data).every(d => Object.keys(d).includes('Tipo')) && (
+                {Object.values(data).every((d) => Object.keys(d).includes('Tipo')) && (
                     <div className="">
                         <Select onValueChange={(value) => table.setColumnFilters([{ id: 'Tipo', value }])}>
                             <SelectTrigger>
@@ -109,7 +109,7 @@ function DataTable<TData, TValue>({
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
-                                    {Array.from(new Set(data.map(d => d.Tipo))).map((tipo, index) => (
+                                    {Array.from(new Set(data.map((d: any) => d.Tipo))).map((tipo, index) => (
                                         <SelectItem key={index} value={tipo}>
                                             {tipo}
                                         </SelectItem>
