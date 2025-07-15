@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/data-table";
 import type { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, AwardIcon } from "lucide-react";
+import { ArrowUpDown, AwardIcon, StretchHorizontal } from "lucide-react";
 import { Card, CardContent, CardHeader } from "./ui/card";
 
 export type Jump = {
@@ -349,7 +349,7 @@ const SimpleJumps = ({ saltos = [] }: { saltos: Jump[] }) => {
     ];
 
     return (
-        <section className="p-5 border-1 border-neutral-200 rounded-md">
+        <section className="p-5 mb-5 border-1 border-neutral-200 rounded-md">
             <header className="flex flex-col gap-5">
                 <div className='flex gap-3 items-center'>
                     <AwardIcon />
@@ -363,37 +363,44 @@ const SimpleJumps = ({ saltos = [] }: { saltos: Jump[] }) => {
                     inputPlaceholder="Buscar por ID atleta, nombre, ID salto..."
                 />
                 {elasticIndexResults.length > 0 && (
-                    <div className="grid grid-cols-2 gap-5">
-                        {elasticIndexResults.map(result => (
-                            <Card key={result.idAtleta} className="p-4 gap-2">
-                                <CardHeader>
-                                    <h3 className="font-bold">{result.nombreAtleta}</h3>
-                                    <span className="text-sm text-gray-500">ID: {result.idAtleta}</span>
-                                </CardHeader>
-                                <CardContent className="flex flex-col gap-3">
-                                    <div className="flex flex-col items-center justify-center gap-1">
-                                        <span className={`text-4xl font-bold ${result.elasticIndex! >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                            {result.elasticIndex?.toFixed(2)}%
-                                        </span>
-                                        <span className="text-sm text-gray-500">Índice Elástico</span>
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-sm text-gray-500">CMJ promedio:</span>
-                                            <span className="text-sm text-gray-500">{result.avgCMJ?.toFixed(2) ?? 'N/A'} cm</span>
+                    <div className="flex flex-col gap-5 mt-4">
+                        <header className="flex flex-col gap-5">
+                            <div className='flex gap-3 items-center'>
+                                <StretchHorizontal />
+                                <h2 className="font-bold text-2xl">Índices elásticos</h2>
+                            </div>
+                        </header>
+                        <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-5">
+                            {elasticIndexResults.map(result => (
+                                <Card key={result.idAtleta} className="p-4 gap-2">
+                                    <CardHeader>
+                                        <h3 className="font-bold">{result.nombreAtleta}</h3>
+                                        <span className="text-sm text-gray-500">ID: {result.idAtleta}</span>
+                                    </CardHeader>
+                                    <CardContent className="flex flex-col gap-3">
+                                        <div className="flex items-center justify-center">
+                                            <span className={`text-4xl font-bold ${result.elasticIndex! >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                                {result.elasticIndex?.toFixed(2)}%
+                                            </span>
                                         </div>
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-sm text-gray-500">SJ promedio:</span>
-                                            <span className="text-sm text-gray-500">{result.avgSJ?.toFixed(2) ?? 'N/A'} cm</span>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-bold text-sm text-gray-500">CMJ promedio:</span>
+                                                <span className="text-sm text-gray-500">{result.avgCMJ?.toFixed(2) ?? 'N/A'} cm</span>
+                                            </div>
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-bold text-sm text-gray-500">SJ promedio:</span>
+                                                <span className="text-sm text-gray-500">{result.avgSJ?.toFixed(2) ?? 'N/A'} cm</span>
+                                            </div>
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-bold text-sm text-gray-500">Saltos realizados:</span>
+                                                <span className="text-sm text-gray-500">{result.cmjCount} CMJ, {result.sjCount} SJ</span>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-sm text-gray-500">Saltos realizados:</span>
-                                            <span className="text-sm text-gray-500">{result.cmjCount} CMJ, {result.sjCount} SJ</span>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        ))}
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>
