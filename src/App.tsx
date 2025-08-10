@@ -58,9 +58,26 @@ function App() {
   ]
 
   const getDataFromFile = async (file: File) => {
-    const buffer = await file.arrayBuffer();
+    let buffer: ArrayBuffer | string = await file.arrayBuffer();
+    const isCsv = file.name.toLowerCase().endsWith('.csv');
+
+    if (isCsv) {
+      buffer = new TextDecoder('UTF-8').decode(buffer);
+    }
+
     let { sesion, atletas, saltos } = await getFileData(buffer);
-    const metricsToOmit = new Set(['Id_de_atleta', 'Nombre_de_atleta', 'Id_de_salto', 'Tipo', 'Fecha_y_hora', 'Peso_KG', 'Simulado', 'Descripción']);
+
+    const metricsToOmit = new Set([
+      'Id_de_atleta',
+      'Nombre_de_atleta',
+      'Id_de_salto',
+      'Tipo',
+      'Fecha_y_hora',
+      'Peso_KG',
+      'Simulado',
+      'Descripción'
+    ]);
+
     const allMetrics = new Set(Object.keys(saltos[0]));
     const validMetrics = Array.from(allMetrics.symmetricDifference(metricsToOmit))
       .map(metric => ({ value: metric, label: metric.replace(/_/g, ' ') }));

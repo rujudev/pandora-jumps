@@ -19,10 +19,8 @@ const formatNumber = (value: number): string => {
 
 type SectionName = 'sesion' | 'atletas' | 'saltos';
 
-export const getFileData = async (buffer: ArrayBuffer) => {
-    const arrayBuffer = await buffer;
-
-    const workbook = read(arrayBuffer, { type: 'array' });
+export const getFileData = async (buffer: ArrayBuffer | string) => {
+    const workbook = read(buffer, { type: 'string' });
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     const rows: any[][] = utils.sheet_to_json(sheet, { header: 1, raw: false });
 
