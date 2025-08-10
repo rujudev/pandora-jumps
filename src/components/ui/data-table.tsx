@@ -126,9 +126,9 @@ function DataTable<TData extends object, TValue>({
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
+                                {headerGroup.headers.map((header, idx) => {
                                     return (
-                                        <TableHead key={header.id}>
+                                        <TableHead key={`${header.id}-${idx}`}>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -148,8 +148,8 @@ function DataTable<TData extends object, TValue>({
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
                                 >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
+                                    {row.getVisibleCells().map((cell, idx) => (
+                                        <TableCell key={`${cell.id}-${idx}`}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
