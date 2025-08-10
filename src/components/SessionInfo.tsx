@@ -1,5 +1,6 @@
 import type { SectionName } from "@/App";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Fragment } from "react/jsx-runtime";
 
 const SessionInfo = ({ sections }: {
     sections: Record<SectionName, any[]> | null
@@ -17,7 +18,7 @@ const SessionInfo = ({ sections }: {
                     const { Id_de_sesion, Lugar, Fecha } = sesion;
 
                     return (
-                        <>
+                        <Fragment key={Id_de_sesion}>
                             <div className="flex items-center gap-3">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -45,8 +46,7 @@ const SessionInfo = ({ sections }: {
                                     <span className="font-bold text-sm"># {Id_de_sesion}</span>
                                 </div>
                             </div>
-
-                        </>
+                        </Fragment>
                     )
                 })}
             </CardContent>
