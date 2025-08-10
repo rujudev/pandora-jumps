@@ -65,9 +65,6 @@ const SimpleJumps = ({ saltos = [] }: { saltos: Jump[] }) => {
             totalCMJ += cmjJump;
         }
 
-        console.log('Atleta: ', data.name, 'Total CMJ:', totalCMJ, 'Count:', data.cmj.length);
-        console.log('Atleta: ', data.name, 'Total SJ:', totalSJ, 'Count:', data.sj.length);
-
         avgCMJ /= data.cmj.length;
 
         for (const sjJump of data.sj) {
@@ -318,7 +315,6 @@ const SimpleJumps = ({ saltos = [] }: { saltos: Jump[] }) => {
         {
             accessorKey: 'Descripción',
             header: ({ column }) => {
-                console.log(column);
                 return (
                     <Button
                         variant="ghost"
