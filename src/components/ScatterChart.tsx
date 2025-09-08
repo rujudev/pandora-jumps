@@ -136,6 +136,11 @@ const CustomTooltip = ({ active, payload, label, ...restOfProps }: any) => {
 export default function ScatterTrendlineChart({ data, metric }: ScatterTrendlineChartProps) {
     const { processedData, trendlineData, minTrendline, maxTrendline } = calculateTrendline(data, metric)
 
+    const athletesMap = new Map<number, string>();
+    data.forEach(d => {
+        athletesMap.set(d.Id_de_atleta, d.Nombre_de_atleta);
+    })
+
     // Calcular estadísticas de la tendencia
     const validData = processedData.filter((item) => {
         const x = item.Id_de_atleta
@@ -173,7 +178,13 @@ export default function ScatterTrendlineChart({ data, metric }: ScatterTrendline
                             dataKey="Id_de_atleta"
                             type="number"
                             domain={["dataMin", "dataMax"]}
-                            ticks={Array.from(new Set(data.map((d) => d.Id_de_atleta).sort((a, b) => a - b)))}
+                            ticks={Array.from(new Set(data.map(d => d.Id_de_atleta))).sort((a, b) => a - b)}
+                            tickFormatter={value => athletesMap.get(value) || ''}
+                            interval={0}
+                            angle={-45}
+                            textAnchor="end"
+                            height={80}
+                            tick={{ fontSize: 11 }}
                         />
                         <YAxis
                             domain={[
