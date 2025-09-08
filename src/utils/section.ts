@@ -132,5 +132,15 @@ export const getFileData = async (buffer: ArrayBuffer | string) => {
         }
     }
 
-    return sections;
+    const atletasIds = new Map<string, number>();
+    sections.atletas.forEach((atleta, index) => {
+        const nombre = atleta['Nombre_de_atleta'] || atleta['Nombre'];
+        atletasIds.set(nombre, index + 1);
+    });
+
+    return {
+        ...sections,
+        atletas: sections.atletas.map(atleta => ({ ...atleta, Id: atletasIds.get(atleta['Nombre_de_atleta'] || atleta['Nombre']) })),
+        saltos: sections.saltos.map(salto => ({ ...salto, Id_de_atleta: atletasIds.get(salto['Nombre_de_atleta'] || salto['Nombre']) })),
+    };
 };
